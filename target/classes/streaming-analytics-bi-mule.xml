@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="3028a676-0182-4ac0-a90d-3675205970d4" >
+		<http:request-connection protocol="HTTPS" host="api.powerbi.com" />
+	</http:request-config>
+	<flow name="Streaming-analytics-realtime" doc:id="7970a282-8e55-4015-ac7c-4168c14a10d6" >
+		<scheduler doc:name="Scheduler" doc:id="cf30d15c-fd2a-4989-9e74-f312e03b26f8" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="SECONDS" />
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="5af0e1bb-a2d7-4ac3-b29b-359ffb56e8c1" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"date" : now(),
+	"level": random()*1000,
+	"pressure": random()*1000,
+	"wellid": 88
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<http:request method="POST" doc:name="Request" doc:id="f74cb466-0c15-46fc-ad76-d2758aca8771" config-ref="HTTP_Request_configuration" url="https://api.powerbi.com/beta/e605cc8a-af51-4dff-a2a5-5f59b23ead9a/datasets/8373fd9f-f8c8-47c6-874f-021c89d32f10/rows?key=jDlExOHU366wUUbp9WpyyLwrvh9Uro2xDjTkhuTxPYhh76L1F5WRKNtC10%2FrUHs41W885QXcMq0kgX6GQqwNuA%3D%3D" />
+	</flow>
+</mule>
