@@ -6,4 +6,4 @@ Mule Flow:
 
 Power BI Visualization:
 
-![2023-01-31 14 40 27](https://user-images.githubusercontent.com/20736982/215879400-1d507122-a7c1-4c2b-b20f-c1aeecb604e2.gif)
+![2023-02-01 14 45 55](https://user-images.githubusercontent.com/20736982/216159723-44ffd62f-4841-48b7-a5f8-a0be30d7e681.gif)
